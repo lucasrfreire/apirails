@@ -1,12 +1,16 @@
+require 'api_version_constraint'
+
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   # Forma de organizar as rotas em "categorias" criar uma pasta com nome da namespace la em controllers
-  # Primeiro parametro cria o path /api
-  # Segundo parametro diz que todo mundo aqui dentro vai trabalhar no formato json, para nao ter que especificar em todos
-  # Terceiro parametro diz que para acessar essa rota o subdominio tem que ser api, exemplo: api.site.com/api/teste
-  # Quarto paramentro e para nao ficar api repetido, agora a url fica assim: api.site.com/teste
+  # :api cria o path /api
+  # defaults: { format: :json } diz que todo mundo aqui dentro vai trabalhar no formato json, para nao ter que especificar em todos
+  # constraints: { subdomain: 'api'} diz que para acessar essa rota o subdominio tem que ser api, exemplo: api.site.com/api/teste
+  # path: '/' e para nao ficar api repetido, agora a url fica assim: api.site.com/teste
   namespace :api, defaults: { format: :json }, constraints: { subdomain: 'api'}, path: '/' do
+    namespace :v1, path: '/', constraints: ApiVersionConstraint.new(version: 1, default: true) do
 
+    end
   end
 end
