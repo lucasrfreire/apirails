@@ -38,13 +38,13 @@ RSpec.configure do |config|
   config.before(:suite) do
     #aqui é definido qual estrategia que ele vai utilizar para fazer a limpeza
     #no caso abaixo isso vai ser executado em cada teste que rodar
-    DatabaseCleaner.Strategy = :transaction
+    DatabaseCleaner.strategy = :transaction
     #isso vai ser executado antes do teste para dar aquela limpada no banco rapidamente
     #pra tudo isso funcionar tem que dar o require no database_cleaner lá em cima
-    DatabaseCleaner.Clean_with(:truncation)
+    DatabaseCleaner.clean_with(:truncation)
   end
 
-  config.around(:each) do |exmaple|
+  config.around(:each) do |example|
     DatabaseCleaner.cleaning do
       example.run
     end
@@ -82,8 +82,8 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 end
 
-#config padrão do Shouda Matchers, apenas escolhendo entre as opções
-Shouda::Matchers.configure do |config|
+# Config padrão do Shouda Matchers, apenas escolhendo entre as opções
+Shoulda::Matchers.configure do |config|
   config.integrate do |with|
     with.test_framework :rspec
     with.library :rails
